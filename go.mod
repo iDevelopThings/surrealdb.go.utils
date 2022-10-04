@@ -1,4 +1,4 @@
-module github.com/idevelopthings/surrealdb_go_utils
+module github.com/idevelopthings/surrealdb.go.utils
 
 go 1.19
 

@@ -8,7 +8,7 @@ A basic little package with some useful structs for working with surreal
 package main
 
 import (
-	"github.com/idevelopthings/surrealdb_go_utils"
+	"github.com/idevelopthings/surrealdb.go.utils"
 )
 
 type User struct {
