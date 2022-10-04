@@ -59,3 +59,39 @@ func TestRecordPointerUnmarshal(t *testing.T) {
 		t.Error("Invalid value")
 	}
 }
+
+func TestRecordCreation(t *testing.T) {
+	type subrec struct {
+		Id *Thing `json:"id"`
+	}
+	type rec struct {
+		Id    *Thing `json:"id"`
+		Value *Record[subrec]
+	}
+
+	r := rec{
+		Id:    NewThing("user:one"),
+		Value: NewRecord[subrec](NewThing("book:one")),
+	}
+
+	if r.Value.IsId() == false {
+		t.Error("Invalid value")
+	}
+
+	if r.Value.Id() != "book:one" {
+		t.Error("Invalid value")
+	}
+
+	r = rec{
+		Id:    NewThing("user:one"),
+		Value: NewRecord[subrec](subrec{Id: NewThing("book:one")}),
+	}
+
+	if r.Value.IsRecord() == false {
+		t.Error("Invalid value")
+	}
+
+	if r.Value.Id() != "book:one" {
+		t.Error("Invalid value")
+	}
+}

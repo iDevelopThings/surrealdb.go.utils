@@ -12,6 +12,26 @@ var (
 	RecordTypeRecord RecordType = "record"
 )
 
+// NewRecord creates a new Record[T] instance.
+// Either the id or the value must be set.
+func NewRecord[T any](value any) *Record[T] {
+	// Being lazy for now... not ideal though.. :|
+
+	val := new(Record[T])
+
+	jsonVal, err := json.Marshal(value)
+	if err != nil {
+		panic(err)
+	}
+
+	err = val.UnmarshalJSON(jsonVal)
+	if err != nil {
+		panic(err)
+	}
+
+	return val
+}
+
 type Record[T any] struct {
 	id    string
 	value T
