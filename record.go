@@ -15,8 +15,16 @@ var (
 // NewRecord creates a new Record[T] instance.
 // Either the id or the value must be set.
 func NewRecord[T any](value any) *Record[T] {
-	// Being lazy for now... not ideal though.. :|
 
+	if thing, ok := value.(Thing); ok {
+		return &Record[T]{
+			id:    thing.Value(),
+			isSet: true,
+			kind:  RecordTypeId,
+		}
+	}
+
+	// Being lazy for now... not ideal though.. :|
 	val := new(Record[T])
 
 	jsonVal, err := json.Marshal(value)

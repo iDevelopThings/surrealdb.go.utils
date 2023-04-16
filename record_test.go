@@ -95,3 +95,28 @@ func TestRecordCreation(t *testing.T) {
 		t.Error("Invalid value")
 	}
 }
+func TestCreatingRecordFromThing(t *testing.T) {
+	type subrec struct {
+		Id *Thing `json:"id"`
+	}
+	type rec struct {
+		Id    *Thing `json:"id"`
+		Value *Record[subrec]
+	}
+
+	r := rec{
+		Id:    NewThing("user:one"),
+		Value: NewRecord[subrec](NewThing("book:one")),
+	}
+
+	newRecord := NewRecord[subrec](r.Id)
+
+	if newRecord.IsId() == false {
+		t.Error("Invalid value")
+	}
+
+	if newRecord.Id() != "user:one" {
+		t.Error("Invalid value")
+	}
+
+}
